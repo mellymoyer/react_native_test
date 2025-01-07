@@ -18,7 +18,7 @@ const WrappedApp = () => (
   </FingerprintJsProProvider>
 );
 
-AppRegistry.registerComponent('AppName', () => WrappedApp);
+AppRegistry.registerComponent(appName, () => WrappedApp);
 
 
 //AppRegistry.registerComponent(
