@@ -15,6 +15,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
 } from 'react-native';
 
 import {
@@ -24,6 +25,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import {useVisitorData} from '@fingerprintjs/fingerprintjs-pro-react-native';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -62,6 +65,8 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const {isLoading, error, data, getData} = useVisitorData()
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -76,6 +81,18 @@ function App(): React.JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <Button title='Reload data' onPress={() => getData()} />
+          {isLoading ? (
+            <Text>Loading...</Text>
+          ) : (
+            <>
+              <Text>VisitorId: {data?.visitorId}</Text>
+              <Text>Full visitor data:</Text>
+              <Text>
+                {error ? error.message : JSON.stringify(data, null, 2)}
+              </Text>
+            </>
+          )}
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
